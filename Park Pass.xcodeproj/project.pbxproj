@@ -12,6 +12,18 @@
 		786606961D09E67800837927 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 786606941D09E67800837927 /* Main.storyboard */; };
 		786606981D09E67800837927 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 786606971D09E67800837927 /* Assets.xcassets */; };
 		7866069B1D09E67800837927 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 786606991D09E67800837927 /* LaunchScreen.storyboard */; };
+		786606AD1D09E76D00837927 /* AccessDenied.wav in Resources */ = {isa = PBXBuildFile; fileRef = 786606A21D09E76D00837927 /* AccessDenied.wav */; };
+		786606AE1D09E76D00837927 /* AccessGranted.wav in Resources */ = {isa = PBXBuildFile; fileRef = 786606A31D09E76D00837927 /* AccessGranted.wav */; };
+		786606AF1D09E76D00837927 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606A41D09E76D00837927 /* DateFormatter.swift */; };
+		786606B01D09E76D00837927 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606A51D09E76D00837927 /* Employee.swift */; };
+		786606B11D09E76D00837927 /* EntrantType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606A61D09E76D00837927 /* EntrantType.swift */; };
+		786606B21D09E76D00837927 /* Guest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606A71D09E76D00837927 /* Guest.swift */; };
+		786606B31D09E76D00837927 /* Kiosk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606A81D09E76D00837927 /* Kiosk.swift */; };
+		786606B41D09E76D00837927 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606A91D09E76D00837927 /* Manager.swift */; };
+		786606B51D09E76D00837927 /* ParkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606AA1D09E76D00837927 /* ParkError.swift */; };
+		786606B61D09E76D00837927 /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606AB1D09E76D00837927 /* Pass.swift */; };
+		786606B71D09E76D00837927 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606AC1D09E76D00837927 /* Sound.swift */; };
+		78EC24A31D0C605600A7AA49 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EC24A21D0C605600A7AA49 /* Vendor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +34,18 @@
 		786606971D09E67800837927 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7866069A1D09E67800837927 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7866069C1D09E67800837927 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		786606A21D09E76D00837927 /* AccessDenied.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AccessDenied.wav; sourceTree = "<group>"; };
+		786606A31D09E76D00837927 /* AccessGranted.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AccessGranted.wav; sourceTree = "<group>"; };
+		786606A41D09E76D00837927 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		786606A51D09E76D00837927 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
+		786606A61D09E76D00837927 /* EntrantType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntrantType.swift; sourceTree = "<group>"; };
+		786606A71D09E76D00837927 /* Guest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Guest.swift; sourceTree = "<group>"; };
+		786606A81D09E76D00837927 /* Kiosk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kiosk.swift; sourceTree = "<group>"; };
+		786606A91D09E76D00837927 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		786606AA1D09E76D00837927 /* ParkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkError.swift; sourceTree = "<group>"; };
+		786606AB1D09E76D00837927 /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
+		786606AC1D09E76D00837927 /* Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		78EC24A21D0C605600A7AA49 /* Vendor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +80,32 @@
 			children = (
 				786606901D09E67800837927 /* AppDelegate.swift */,
 				786606921D09E67800837927 /* ViewController.swift */,
+				786606A61D09E76D00837927 /* EntrantType.swift */,
+				786606A71D09E76D00837927 /* Guest.swift */,
+				786606A51D09E76D00837927 /* Employee.swift */,
+				786606A91D09E76D00837927 /* Manager.swift */,
+				78EC24A21D0C605600A7AA49 /* Vendor.swift */,
+				786606A81D09E76D00837927 /* Kiosk.swift */,
+				786606AB1D09E76D00837927 /* Pass.swift */,
+				786606AA1D09E76D00837927 /* ParkError.swift */,
+				786606AC1D09E76D00837927 /* Sound.swift */,
+				786606A41D09E76D00837927 /* DateFormatter.swift */,
 				786606941D09E67800837927 /* Main.storyboard */,
 				786606971D09E67800837927 /* Assets.xcassets */,
 				786606991D09E67800837927 /* LaunchScreen.storyboard */,
 				7866069C1D09E67800837927 /* Info.plist */,
+				786606B81D09E77A00837927 /* Sound files */,
 			);
 			path = "Park Pass";
+			sourceTree = "<group>";
+		};
+		786606B81D09E77A00837927 /* Sound files */ = {
+			isa = PBXGroup;
+			children = (
+				786606A21D09E76D00837927 /* AccessDenied.wav */,
+				786606A31D09E76D00837927 /* AccessGranted.wav */,
+			);
+			name = "Sound files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,8 +167,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7866069B1D09E67800837927 /* LaunchScreen.storyboard in Resources */,
+				786606AE1D09E76D00837927 /* AccessGranted.wav in Resources */,
 				786606981D09E67800837927 /* Assets.xcassets in Resources */,
 				786606961D09E67800837927 /* Main.storyboard in Resources */,
+				786606AD1D09E76D00837927 /* AccessDenied.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +181,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				786606B11D09E76D00837927 /* EntrantType.swift in Sources */,
+				786606B71D09E76D00837927 /* Sound.swift in Sources */,
+				786606AF1D09E76D00837927 /* DateFormatter.swift in Sources */,
+				786606B21D09E76D00837927 /* Guest.swift in Sources */,
+				786606B41D09E76D00837927 /* Manager.swift in Sources */,
+				786606B31D09E76D00837927 /* Kiosk.swift in Sources */,
+				786606B51D09E76D00837927 /* ParkError.swift in Sources */,
+				786606B01D09E76D00837927 /* Employee.swift in Sources */,
 				786606931D09E67800837927 /* ViewController.swift in Sources */,
+				78EC24A31D0C605600A7AA49 /* Vendor.swift in Sources */,
+				786606B61D09E76D00837927 /* Pass.swift in Sources */,
 				786606911D09E67800837927 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +344,7 @@
 				786606A11D09E67800837927 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
