@@ -23,6 +23,7 @@
 		786606B51D09E76D00837927 /* ParkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606AA1D09E76D00837927 /* ParkError.swift */; };
 		786606B61D09E76D00837927 /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606AB1D09E76D00837927 /* Pass.swift */; };
 		786606B71D09E76D00837927 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786606AC1D09E76D00837927 /* Sound.swift */; };
+		78E1A72A1D0D51BE003F0AC3 /* PassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E1A7291D0D51BE003F0AC3 /* PassViewController.swift */; };
 		78EC24A31D0C605600A7AA49 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EC24A21D0C605600A7AA49 /* Vendor.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		786606AA1D09E76D00837927 /* ParkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkError.swift; sourceTree = "<group>"; };
 		786606AB1D09E76D00837927 /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
 		786606AC1D09E76D00837927 /* Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		78E1A7291D0D51BE003F0AC3 /* PassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassViewController.swift; sourceTree = "<group>"; };
 		78EC24A21D0C605600A7AA49 /* Vendor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +82,7 @@
 			children = (
 				786606901D09E67800837927 /* AppDelegate.swift */,
 				786606921D09E67800837927 /* ViewController.swift */,
+				78E1A7291D0D51BE003F0AC3 /* PassViewController.swift */,
 				786606A61D09E76D00837927 /* EntrantType.swift */,
 				786606A71D09E76D00837927 /* Guest.swift */,
 				786606A51D09E76D00837927 /* Employee.swift */,
@@ -188,6 +191,7 @@
 				786606B41D09E76D00837927 /* Manager.swift in Sources */,
 				786606B31D09E76D00837927 /* Kiosk.swift in Sources */,
 				786606B51D09E76D00837927 /* ParkError.swift in Sources */,
+				78E1A72A1D0D51BE003F0AC3 /* PassViewController.swift in Sources */,
 				786606B01D09E76D00837927 /* Employee.swift in Sources */,
 				786606931D09E67800837927 /* ViewController.swift in Sources */,
 				78EC24A31D0C605600A7AA49 /* Vendor.swift in Sources */,

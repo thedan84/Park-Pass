@@ -85,11 +85,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func generatePassButtonTapped(sender: UIButton) {
-        if let selectedEntrant = self.selectedEntrant {
+        if let selectedEntrant = self.selectedEntrant, let entrant = selectedEntrantType {
             switch selectedEntrant {
             case "Guest":
                 
-                switch selectedEntrantType! {
+                switch entrant {
                 case "Child":
                     do {
                         guest = try Guest(dateOfBirth: dateOfBirthTextField.text, guestType: .FreeChild)
