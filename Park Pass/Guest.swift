@@ -81,32 +81,7 @@ struct Guest: EntrantType {
             self.lastName = last
             self.birthday = birthyear
             self.type = .Senior
-        default: self.type = .Classic
+        default: self.type = guestType
         }
     }
-    
-//    init(firstName: String?, lastName: String?, streetAddress: String? = nil, city: String? = nil, state: String? = nil, zipCode: Int? = nil, dateOfBirth: String?, guestType: GuestType) throws {
-//        
-//        guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
-//        guard let street = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.MissingAddress }
-//        guard let birthDate = dateOfBirth else { throw ParkError.MissingDateOfBirth }
-//        
-//        self.firstName = first
-//        self.lastName = last
-//        guard let birthday = dateFormatter.dateFromString(birthDate) else { throw ParkError.MissingDateOfBirth }
-//        
-//        self.birthday = birthday
-//        
-//        switch guestType {
-//        case .SeasonPass:
-//            self.streetAddress = street
-//            self.city = city
-//            self.state = state
-//            self.zipCode = zip
-//            self.type = guestType
-//        case .Senior:
-//            self.type = guestType
-//        default: self.type = guestType
-//        }
-//    }
 }

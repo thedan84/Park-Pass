@@ -19,7 +19,6 @@ protocol Employable: EntrantType {
     var socialSecurityNumber: Int { get }
     var dateOfBirth: NSDate { get }
     var employeeType: EmployeeType { get }
-    var workType: WorkType { get }
 }
 
 //Enum to differentiate between the various Hourly Employee types
@@ -29,6 +28,10 @@ enum EmployeeType {
 
 enum WorkType {
     case FoodServices, RideServices, Maintenance
+}
+
+enum ProjectNumber {
+    case oneThousandOne, oneThousandTwo, oneThousandThree, twoThousandOne, twoThousandTwo
 }
 
 struct HourlyEmployee: Employable {
@@ -81,13 +84,12 @@ struct ContractEmployee: Employable {
     var zipCode: Int
     var socialSecurityNumber: Int
     var dateOfBirth: NSDate
-    var projectNumber: Int?
+    var projectNumber: ProjectNumber
     var employeeType: EmployeeType
-    var workType: WorkType
     
     var pass: Pass?
     
-    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: Int?, socialSecurityNumber: Int?, dateOfBirth: String?, workType: WorkType?, projectNumber: Int?) throws {
+    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: Int?, socialSecurityNumber: Int?, dateOfBirth: String?, projectNumber: ProjectNumber?) throws {
         guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
         
         guard let address = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.MissingAddress }
@@ -97,8 +99,6 @@ struct ContractEmployee: Employable {
         guard let birthDate = dateOfBirth else { throw ParkError.MissingDateOfBirth }
         
         guard let project = projectNumber else { throw ParkError.MissingProject }
-        
-        guard let work = workType else { throw ParkError.MissingType }
         
         self.firstName = first
         self.lastName = last
@@ -110,7 +110,5 @@ struct ContractEmployee: Employable {
         self.dateOfBirth = dateFormatter.dateFromString(birthDate)!
         self.employeeType = .Contract
         self.projectNumber = project
-        self.workType = work
-        
     }
 }

@@ -42,6 +42,7 @@ struct Pass: PassType {
         case GeneralManagerPass = "General Manager Pass"
         case SeniorManagerPass = "Senior Manager Pass"
         case Vendor = "Vendor"
+        case Contractor = "Contractor"
     }
     
     //MARK: - Initialization
@@ -79,15 +80,7 @@ struct Pass: PassType {
         case let employee as ContractEmployee:
             self.entrantName = "\(employee.firstName) \(employee.lastName)"
             
-            switch employee.workType {
-            case .FoodServices:
-                self.type = Type.FoodServicePass.rawValue
-            case .RideServices:
-                self.type = Type.RideServicePass.rawValue
-            case .Maintenance:
-                self.type = Type.MaintenancePass.rawValue
-            }
-            
+            self.type = Type.Contractor.rawValue
         case let manager as Manager:
             self.entrantName = "\(manager.firstName) \(manager.lastName)"
             
@@ -131,13 +124,21 @@ enum AreaAccess {
             case .Maintenance: access = [.AmusementAreas, .KitchenAreas, .RideControlAreas, .MaintenanceAreas]
             }
         case let employee as ContractEmployee:
-            switch employee.workType {
-            case .FoodServices: access = [.AmusementAreas, .KitchenAreas]
-            case .RideServices: access = [.AmusementAreas, .RideControlAreas]
-            case .Maintenance: access = [.AmusementAreas, .KitchenAreas, .RideControlAreas, .MaintenanceAreas]
+            switch employee.projectNumber {
+            case .oneThousandOne: access = [.AmusementAreas, .RideControlAreas]
+            case .oneThousandTwo: access = [.AmusementAreas, .RideControlAreas, .MaintenanceAreas]
+            case .oneThousandThree: access = [.AmusementAreas, .RideControlAreas, .KitchenAreas, .MaintenanceAreas, .OfficeAreas]
+            case .twoThousandOne: access = [.OfficeAreas]
+            case .twoThousandTwo: access = [.KitchenAreas, .MaintenanceAreas]
             }
         case is Manager: access = [.AmusementAreas, .KitchenAreas, .RideControlAreas, .MaintenanceAreas, .OfficeAreas]
-        case is Vendor: access = [.AmusementAreas]
+        case let vendor as Vendor:
+            switch vendor.company {
+            case .Acme: access = [.KitchenAreas]
+            case .Orkin: access = [.AmusementAreas, .RideControlAreas, .KitchenAreas]
+            case .Fedex: access = [.MaintenanceAreas, .OfficeAreas]
+            case .NWElectrical: access = [.AmusementAreas, .RideControlAreas, .KitchenAreas, .MaintenanceAreas, .OfficeAreas]
+            }
         default: break
         }
         
