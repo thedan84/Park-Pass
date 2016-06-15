@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var dateOfBirthTextField: UITextField!
     @IBOutlet weak var securityNumberTextField: UITextField!
@@ -53,6 +53,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        projectNumberTextField.delegate = self
+        dateOfBirthTextField.delegate = self
+        securityNumberTextField.delegate = self
+        zipCodeTextField.delegate = self
     }
     
     @IBAction func firstRowButtonTapped(sender: UIButton) {
@@ -152,10 +157,18 @@ class ViewController: UIViewController {
                 default: break
                 }
             case "Employee":
+                var workType: WorkType?
+                
                 switch entrant {
-                case "Food":
+                case "Food": workType = .FoodServices
+                case "Ride": workType = .RideServices
+                case "Maintenance": workType = .Maintenance
+                default: workType = nil
+                }
+                
+                if let work = workType {
                     do {
-                        guest = try HourlyEmployee(firstName: firstNameTextField.text, lastName: lastNameTextField.text, streetAddress: streetAddressTextField.text, city: cityNameTextField.text, state: stateNameTextField.text, zipCode: Int(zipCodeTextField.text!), socialSecurityNumber: Int(securityNumberTextField.text!), dateOfBirth: dateOfBirthTextField.text, workType: .FoodServices)
+                        guest = try HourlyEmployee(firstName: firstNameTextField.text, lastName: lastNameTextField.text, streetAddress: streetAddressTextField.text, city: cityNameTextField.text, state: stateNameTextField.text, zipCode: Int(zipCodeTextField.text!), socialSecurityNumber: Int(securityNumberTextField.text!), dateOfBirth: dateOfBirthTextField.text, workType: work)
                     } catch ParkError.MissingName {
                         displayAlertWithTitle("Missing Info", andMessage: "Please provide a name to proceed!")
                     } catch ParkError.MissingAddress {
@@ -169,39 +182,8 @@ class ViewController: UIViewController {
                     } catch {
                         print(error)
                     }
-                case "Ride":
-                    do {
-                        guest = try HourlyEmployee(firstName: firstNameTextField.text, lastName: lastNameTextField.text, streetAddress: streetAddressTextField.text, city: cityNameTextField.text, state: stateNameTextField.text, zipCode: Int(zipCodeTextField.text!), socialSecurityNumber: Int(securityNumberTextField.text!), dateOfBirth: dateOfBirthTextField.text, workType: .RideServices)
-                    } catch ParkError.MissingName {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a name to proceed!")
-                    } catch ParkError.MissingAddress {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide an address to proceed!")
-                    } catch ParkError.MissingSecurityNumber {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a social security number to proceed!")
-                    } catch ParkError.MissingType {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a work type to proceed!")
-                    } catch ParkError.MissingDateOfBirth {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a date of birth to proceed!")
-                    } catch {
-                        print(error)
-                    }
-                case "Maintenance":
-                    do {
-                        guest = try HourlyEmployee(firstName: firstNameTextField.text, lastName: lastNameTextField.text, streetAddress: streetAddressTextField.text, city: cityNameTextField.text, state: stateNameTextField.text, zipCode: Int(zipCodeTextField.text!), socialSecurityNumber: Int(securityNumberTextField.text!), dateOfBirth: dateOfBirthTextField.text, workType: .Maintenance)
-                    } catch ParkError.MissingName {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a name to proceed!")
-                    } catch ParkError.MissingAddress {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide an address to proceed!")
-                    } catch ParkError.MissingSecurityNumber {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a social security number to proceed!")
-                    } catch ParkError.MissingType {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a work type to proceed!")
-                    } catch ParkError.MissingDateOfBirth {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a date of birth to proceed!")
-                    } catch {
-                        print(error)
-                    }
-                default: break
+                } else {
+                    displayAlertWithTitle("Missing Info", andMessage: "Please select a valid work type to proceed!")
                 }
             case "Contractor":
                 var project: ProjectNumber?
@@ -232,10 +214,18 @@ class ViewController: UIViewController {
                     displayAlertWithTitle("Warning", andMessage: "Please enter a valid project number to proceed!")
                 }
             case "Manager":
+                var managerType: ManagementTier?
+
                 switch entrant {
-                case "Shift Manager":
+                case "Shift Manager": managerType = .ShiftManager
+                case "General Manager": managerType = .GeneralManager
+                case "Senior Manager": managerType = .SeniorManager
+                default: managerType = nil
+                }
+                
+                if let manager = managerType {
                     do {
-                        guest = try Manager(firstName: firstNameTextField.text, lastName: lastNameTextField.text, streetAddress: streetAddressTextField.text, city: cityNameTextField.text, state: stateNameTextField.text, zipCode: Int(zipCodeTextField.text!), socialSecurityNumber: Int(securityNumberTextField.text!), dateOfBirth: dateOfBirthTextField.text, managerType: .ShiftManager)
+                        guest = try Manager(firstName: firstNameTextField.text, lastName: lastNameTextField.text, streetAddress: streetAddressTextField.text, city: cityNameTextField.text, state: stateNameTextField.text, zipCode: Int(zipCodeTextField.text!), socialSecurityNumber: Int(securityNumberTextField.text!), dateOfBirth: dateOfBirthTextField.text, managerType: manager)
                     } catch ParkError.MissingName {
                         displayAlertWithTitle("Missing Info", andMessage: "Please provide a name to proceed!")
                     } catch ParkError.MissingAddress {
@@ -249,39 +239,8 @@ class ViewController: UIViewController {
                     } catch {
                         print(error)
                     }
-                case "General Manager":
-                    do {
-                        guest = try Manager(firstName: firstNameTextField.text, lastName: lastNameTextField.text, streetAddress: streetAddressTextField.text, city: cityNameTextField.text, state: stateNameTextField.text, zipCode: Int(zipCodeTextField.text!), socialSecurityNumber: Int(securityNumberTextField.text!), dateOfBirth: dateOfBirthTextField.text, managerType: .GeneralManager)
-                    } catch ParkError.MissingName {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a name to proceed!")
-                    } catch ParkError.MissingAddress {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide an address to proceed!")
-                    } catch ParkError.MissingType {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a manager type to proceed!")
-                    } catch ParkError.MissingDateOfBirth {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a date of birth to proceed!")
-                    } catch ParkError.MissingSecurityNumber {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a social security number to proceed!")
-                    } catch {
-                        print(error)
-                    }
-                case "Senior Manager":
-                    do {
-                        guest = try Manager(firstName: firstNameTextField.text, lastName: lastNameTextField.text, streetAddress: streetAddressTextField.text, city: cityNameTextField.text, state: stateNameTextField.text, zipCode: Int(zipCodeTextField.text!), socialSecurityNumber: Int(securityNumberTextField.text!), dateOfBirth: dateOfBirthTextField.text, managerType: .SeniorManager)
-                    } catch ParkError.MissingName {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a name to proceed!")
-                    } catch ParkError.MissingAddress {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide an address to proceed!")
-                    } catch ParkError.MissingType {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a manager type to proceed!")
-                    } catch ParkError.MissingDateOfBirth {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a date of birth to proceed!")
-                    } catch ParkError.MissingSecurityNumber {
-                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a social security number to proceed!")
-                    } catch {
-                        print(error)
-                    }
-                default: break
+                } else {
+                    displayAlertWithTitle("Missing Info", andMessage: "Please select a valid managment tier to proceed!")
                 }
             case "Vendor":
                 var company: Company?
@@ -352,59 +311,15 @@ class ViewController: UIViewController {
                 self.zipCodeTextField.text = "91601"
                 self.securityNumberTextField.text = "1212344"
             case "Contractor":
-                switch entrant {
-                case "1001":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.streetAddressTextField.text = "Hollywood Blvd."
-                    self.cityNameTextField.text = "Los Angeles"
-                    self.stateNameTextField.text = "CA"
-                    self.zipCodeTextField.text = "91601"
-                    self.securityNumberTextField.text = "1212344"
-                    self.projectNumberTextField.text = "1001"
-                case "1002":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.streetAddressTextField.text = "Hollywood Blvd."
-                    self.cityNameTextField.text = "Los Angeles"
-                    self.stateNameTextField.text = "CA"
-                    self.zipCodeTextField.text = "91601"
-                    self.securityNumberTextField.text = "1212344"
-                    self.projectNumberTextField.text = "1002"
-                case "1003":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.streetAddressTextField.text = "Hollywood Blvd."
-                    self.cityNameTextField.text = "Los Angeles"
-                    self.stateNameTextField.text = "CA"
-                    self.zipCodeTextField.text = "91601"
-                    self.securityNumberTextField.text = "1212344"
-                    self.projectNumberTextField.text = "1003"
-                case "2001":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.streetAddressTextField.text = "Hollywood Blvd."
-                    self.cityNameTextField.text = "Los Angeles"
-                    self.stateNameTextField.text = "CA"
-                    self.zipCodeTextField.text = "91601"
-                    self.securityNumberTextField.text = "1212344"
-                    self.projectNumberTextField.text = "2001"
-                case "2002":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.streetAddressTextField.text = "Hollywood Blvd."
-                    self.cityNameTextField.text = "Los Angeles"
-                    self.stateNameTextField.text = "CA"
-                    self.zipCodeTextField.text = "91601"
-                    self.securityNumberTextField.text = "1212344"
-                    self.projectNumberTextField.text = "2002"
-                default: break
-                }
+                self.firstNameTextField.text = "Joe"
+                self.lastNameTextField.text = "Smith"
+                self.dateOfBirthTextField.text = "06/10/2002"
+                self.streetAddressTextField.text = "Hollywood Blvd."
+                self.cityNameTextField.text = "Los Angeles"
+                self.stateNameTextField.text = "CA"
+                self.zipCodeTextField.text = "91601"
+                self.securityNumberTextField.text = "1212344"
+                self.projectNumberTextField.text = entrant
             case "Manager":
                 self.firstNameTextField.text = "Joe"
                 self.lastNameTextField.text = "Smith"
@@ -415,29 +330,10 @@ class ViewController: UIViewController {
                 self.zipCodeTextField.text = "91601"
                 self.securityNumberTextField.text = "1212344"
             case "Vendor":
-                switch entrant {
-                case "Acme":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.companyNameTextField.text = "Acme"
-                case "Orkin":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.companyNameTextField.text = "Orkin"
-                case "Fedex":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.companyNameTextField.text = "Fedex"
-                case "NW Electrical":
-                    self.firstNameTextField.text = "Joe"
-                    self.lastNameTextField.text = "Smith"
-                    self.dateOfBirthTextField.text = "06/10/2002"
-                    self.companyNameTextField.text = "NW Electrical"
-                    default: break
-                }
+                self.firstNameTextField.text = "Joe"
+                self.lastNameTextField.text = "Smith"
+                self.dateOfBirthTextField.text = "06/10/2002"
+                self.companyNameTextField.text = entrant
             default: break
             }
         }
@@ -489,5 +385,22 @@ class ViewController: UIViewController {
         alert.addAction(okAction)
         
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let currentLocale = NSLocale.currentLocale()
+        
+        let decimalSeparator = currentLocale.objectForKey(NSLocaleDecimalSeparator) as! String
+        
+        let existingTextHasDecimalSeparator = textField.text?.rangeOfString(decimalSeparator)
+        let replacementTextHasDecimalSeparator = string.rangeOfString(decimalSeparator)
+        
+        let replacementTextHasAlphabet = string.rangeOfCharacterFromSet(NSCharacterSet.letterCharacterSet())
+        
+        if existingTextHasDecimalSeparator != nil && replacementTextHasDecimalSeparator != nil || replacementTextHasAlphabet != nil {
+            return false
+        } else {
+            return true
+        }
     }
 }
