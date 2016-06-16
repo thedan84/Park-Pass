@@ -10,6 +10,7 @@ import UIKit
 
 class PassViewController: UIViewController {
 
+    //MARK: - Outlets
     @IBOutlet weak var guestImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var passTypeLabel: UILabel!
@@ -19,8 +20,11 @@ class PassViewController: UIViewController {
     @IBOutlet weak var testResultView: UIView!
     @IBOutlet weak var testResultLabel: UILabel!
     
+    //MARK: - Properties
     var guest: EntrantType?
     
+    //MARK: - View lifecycle
+    //viewDidLoad() updates it's subviews dependent on the guest passed in
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,7 +51,7 @@ class PassViewController: UIViewController {
                     case .AllRides:
                         rideAccessLabel.text = "Unlimited Rides"
                     case .SkipAllRideLines:
-                        rideAccessLabel.text = "Skip All Ride Lines"
+                        rideAccessLabel.text = "Unlimited Rides; Skip All Ride Lines"
                     }
                 }                
             }
@@ -76,18 +80,22 @@ class PassViewController: UIViewController {
         }
     }
     
+    //MARK: - Action methods
+    //Tests if the entrant has access to amusement areas
     @IBAction func testAmusementAreaAccessTapped(sender: UIButton) {
         try! guest?.swipePass(forArea: .AmusementAreas) { result in
             self.updateTestResultViewForResult(result)
         }
     }
     
+    //Tests if the entrant has ride access
     @IBAction func testRideAccessTapped(sender: UIButton) {
         try! guest?.swipePass(forRide: .AllRides) { result in
             self.updateTestResultViewForResult(result)
         }
     }
     
+    //Tests if the entrant has access to the kitchen
     @IBAction func testKitchenAccessTapped(sender: UIButton) {
         try! guest?.swipePass(forArea: .KitchenAreas) { result in
             self.updateTestResultViewForResult(result)
@@ -95,12 +103,14 @@ class PassViewController: UIViewController {
         }
     }
     
+    //Tests if the entrant has access to maintenance areas
     @IBAction func testMaintenanceAccessTapped(sender: UIButton) {
         try! guest?.swipePass(forArea: .MaintenanceAreas) { result in
             self.updateTestResultViewForResult(result)
         }
     }
     
+    //Tests if the entrant has access to office areas
     @IBAction func testOfficeAccessTapped(sender: UIButton) {
         try! guest?.swipePass(forArea: .OfficeAreas) { result in
             self.updateTestResultViewForResult(result)
@@ -108,10 +118,12 @@ class PassViewController: UIViewController {
         }
     }
     
+    //Dismisses the view
     @IBAction func createNewPassButtonTapped(sender: UIButton) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //Helper method to update the 'test result view'
     func updateTestResultViewForResult(result: Bool) {
         switch result {
         case true:

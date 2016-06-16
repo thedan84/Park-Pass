@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
+    //MARK: - Outlets
     @IBOutlet weak var dateOfBirthTextField: UITextField!
     @IBOutlet weak var securityNumberTextField: UITextField!
     @IBOutlet weak var projectNumberTextField: UITextField!
@@ -36,11 +37,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var contractEmployeeRequiredFields: [UITextField]!
     @IBOutlet var vendorRequiredFields: [UITextField]!
     
+    //MARK: - Properties
     let kiosk = Kiosk()
     var guest: EntrantType?
     
     var selectedEntrant: String?
     
+    //This property determines which text field should be hidden for which entrant type
     var selectedEntrantType: String? {
         didSet {
             for field in allTextFields {
@@ -51,6 +54,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +64,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         zipCodeTextField.delegate = self
     }
     
+    //MARK: - Action methods
+    //This function updates the selectedEntrant property, dependant on the tapped button in the first row
     @IBAction func firstRowButtonTapped(sender: UIButton) {
         switch sender.tag {
         case 0:
@@ -101,10 +107,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //This function updates the selectedEntrantType property, dependent on the button tapped in the second row
     @IBAction func guestRowButtonTapped(sender: UIButton) {
         selectedEntrantType = sender.currentTitle
     }
     
+    //This function generates a guest, dependent on the selectedEntrant and selectedEntrantType properties. It also generates and assigns a pass to the guest, and presents the PassViewController, if guest and pass generation are successful
     @IBAction func generatePassButtonTapped(sender: UIButton) {
         if let selectedEntrant = self.selectedEntrant, let entrant = selectedEntrantType {
             switch selectedEntrant {
@@ -270,6 +278,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
+        checkValidInputForTextFields()
+        
         if var guest = guest {
             let pass = self.kiosk.createPassForEntrant(guest)
             guest.pass = pass
@@ -278,8 +288,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             passVC.guest = guest
             presentViewController(passVC, animated: true, completion: nil)
         }
+        
     }
     
+    //This function updates the text fields with plug values for the different entrant types
     @IBAction func populateDataButtonTapped(sender: UIButton) {
         if let selectedEntrant = self.selectedEntrant, let entrant = self.selectedEntrantType {
             switch selectedEntrant {
@@ -339,6 +351,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //This function is used in the selectedEntrantType property to show or hide the necessary text fields for the various entrant types
     func updateTextFieldsForEntrant(entrant: String) {
         switch entrant {
         case "Child":
@@ -377,6 +390,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //Helper function to display an alert when something wrong was entered in the text fields, or when errors are thrown
     func displayAlertWithTitle(title: String, andMessage message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
@@ -387,6 +401,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         presentViewController(alert, animated: true, completion: nil)
     }
     
+    //MARK: - UITextFieldDelegate
+    //This function from the UITextFieldDelegate protocol disables wrong input into text fields which expect integer values
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let currentLocale = NSLocale.currentLocale()
         
@@ -401,6 +417,53 @@ class ViewController: UIViewController, UITextFieldDelegate {
             return false
         } else {
             return true
+        }
+    }
+    
+    //This function checks for valid input dependent on the type of information required
+    func checkValidInputForTextFields() {
+        let allTextFields = [firstNameTextField, lastNameTextField, streetAddressTextField, cityNameTextField, stateNameTextField, companyNameTextField, dateOfBirthTextField, projectNumberTextField, zipCodeTextField, securityNumberTextField]
+        
+        for textField in allTextFields {
+            switch textField {
+            case firstNameTextField, lastNameTextField:
+                if textField.text?.characters.count > 15 {
+                    displayAlertWithTitle("Wrong Input", andMessage: "A person's name shouldn't be longer than 15 characters")
+                }
+            case streetAddressTextField:
+                if textField.text?.characters.count > 15 {
+                    displayAlertWithTitle("Wrong Input", andMessage: "Street names shouldn't be longer than 10 characters")
+                }
+            case cityNameTextField:
+                if textField.text?.characters.count > 15 {
+                    displayAlertWithTitle("Wrong Input", andMessage: "City names shouldn't be longer than 15 characters")
+                }
+            case companyNameTextField:
+                if textField.text?.characters.count > 15 {
+                    displayAlertWithTitle("Wrong Input", andMessage: "Company names shouldn't be longer than 15 characters")
+                }
+            case stateNameTextField:
+                if textField.text?.characters.count > 2 {
+                    displayAlertWithTitle("Wrong Input", andMessage: "Please enter the two letter abbreviation for state names")
+                }
+            case zipCodeTextField:
+                if textField.text?.characters.count > 5 {
+                    displayAlertWithTitle("Wrong Inpu", andMessage: "Zip codes shouldn't be longer than 5 characters")
+                }
+            case projectNumberTextField:
+                if textField.text?.characters.count > 4 {
+                    displayAlertWithTitle("Wrong Inpu", andMessage: "Project numbers shouldn't be longer than 5 characters")
+                }
+            case dateOfBirthTextField:
+                if textField.text?.characters.count > 10 {
+                    displayAlertWithTitle("Wrong Inpu", andMessage: "Dates of birth shouldn't be longer than 10 characters")
+                }
+            case securityNumberTextField:
+                if textField.text?.characters.count > 7 {
+                    displayAlertWithTitle("Wrong Inpu", andMessage: "Security numbers shouldn't be longer than 7 characters")
+                }
+            default: break
+            }
         }
     }
 }

@@ -125,9 +125,9 @@ enum AreaAccess {
             }
         case let employee as ContractEmployee:
             switch employee.projectNumber {
-            case .oneThousandOne: access = [.AmusementAreas, .RideControlAreas]
-            case .oneThousandTwo: access = [.AmusementAreas, .RideControlAreas, .MaintenanceAreas]
-            case .oneThousandThree: access = [.AmusementAreas, .RideControlAreas, .KitchenAreas, .MaintenanceAreas, .OfficeAreas]
+            case .oneThousandOne: access = [.AmusementAreas]
+            case .oneThousandTwo: access = [.AmusementAreas, .MaintenanceAreas]
+            case .oneThousandThree: access = [.AmusementAreas, .KitchenAreas, .MaintenanceAreas, .OfficeAreas]
             case .twoThousandOne: access = [.OfficeAreas]
             case .twoThousandTwo: access = [.KitchenAreas, .MaintenanceAreas]
             }
@@ -160,6 +160,13 @@ enum RideAccess {
             case .VIP, .SeasonPass, .Senior: access = [.AllRides, .SkipAllRideLines]
             }
         case is HourlyEmployee: access = [.AllRides]
+        case let employee as ContractEmployee:
+            switch employee.projectNumber {
+            case .oneThousandOne: access = [.AllRides]
+            case .oneThousandTwo: access = [.AllRides]
+            case .oneThousandThree: access = [.AllRides]
+            default: break
+            }
         case is Manager: access = [.AllRides]
         default: break
         }
