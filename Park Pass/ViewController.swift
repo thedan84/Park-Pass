@@ -37,6 +37,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var contractEmployeeRequiredFields: [UITextField]!
     @IBOutlet var vendorRequiredFields: [UITextField]!
     
+    @IBOutlet weak var generatePassButtonBottomConstraint: NSLayoutConstraint!
+    
     //MARK: - Properties
     let kiosk = Kiosk()
     var guest: EntrantType?
@@ -62,6 +64,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         dateOfBirthTextField.delegate = self
         securityNumberTextField.delegate = self
         zipCodeTextField.delegate = self
+        
+
+        //Please uncomment before testing on iPad Pro
+        /*
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+         */
     }
     
     //MARK: - Action methods
@@ -471,5 +480,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         }
+    }
+    
+    //Helper method which moves the generate pass and populate data buttons up when the keyboard is shown
+    func keyboardWillShow(notification: NSNotification) {
+        if let userInfoDictionary = notification.userInfo, keyboardFrameValue = userInfoDictionary[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardFrame = keyboardFrameValue.CGRectValue()
+            
+            UIView.animateWithDuration(0.8) {
+                self.generatePassButtonBottomConstraint.constant = keyboardFrame.size.height + 10
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    //Helper method which moves the generate pass and populate data buttons down when the keyboard is hidden
+    func keyboardWillHide(notification: NSNotification) {
+        UIView.animateWithDuration(0.8) {
+            self.generatePassButtonBottomConstraint.constant = 40
+            self.view.layoutIfNeeded()
+        }
+        
     }
 }
