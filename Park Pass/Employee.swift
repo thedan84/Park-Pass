@@ -89,6 +89,7 @@ struct ContractEmployee: Employable {
     
     var pass: Pass?
     
+    //MARK: - Initialization
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: Int?, socialSecurityNumber: Int?, dateOfBirth: String?, projectNumber: ProjectNumber?) throws {
         guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
         

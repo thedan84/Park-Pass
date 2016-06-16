@@ -425,44 +425,50 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let allTextFields = [firstNameTextField, lastNameTextField, streetAddressTextField, cityNameTextField, stateNameTextField, companyNameTextField, dateOfBirthTextField, projectNumberTextField, zipCodeTextField, securityNumberTextField]
         
         for textField in allTextFields {
-            switch textField {
-            case firstNameTextField, lastNameTextField:
-                if textField.text?.characters.count > 15 {
-                    displayAlertWithTitle("Wrong Input", andMessage: "A person's name shouldn't be longer than 15 characters")
+            if !textField.hidden {
+                switch textField {
+                case firstNameTextField, lastNameTextField:
+                    //Values for text lengths are completely made up for names and social security numbers. ;-)
+                    if textField.text?.characters.count > 15 {
+                        displayAlertWithTitle("Wrong Input", andMessage: "A person's name shouldn't be longer than 15 characters")
+                    }
+                case streetAddressTextField:
+                    if textField.text?.characters.count > 15 {
+                        displayAlertWithTitle("Wrong Input", andMessage: "Street names shouldn't be longer than 10 characters")
+                    }
+                case cityNameTextField:
+                    if textField.text?.characters.count > 15 {
+                        displayAlertWithTitle("Wrong Input", andMessage: "City names shouldn't be longer than 15 characters")
+                    }
+                case companyNameTextField:
+                    if textField.text?.characters.count > 15 {
+                        displayAlertWithTitle("Wrong Input", andMessage: "Company names shouldn't be longer than 15 characters")
+                    }
+                case stateNameTextField:
+                    if textField.text?.characters.count != 2 {
+                        displayAlertWithTitle("Wrong Input", andMessage: "Please enter the two letter abbreviation for state names")
+                    }
+                    //Value for text length is based on US zip codes which are 5 characters long
+                case zipCodeTextField:
+                    if textField.text?.characters.count != 5 {
+                        displayAlertWithTitle("Wrong Inpu", andMessage: "Please enter a valid zip code. Zip codes should be 5 characters long")
+                    }
+                    //Value for text length is based on the project numbers provided in the Entrant Rules Matrix
+                case projectNumberTextField:
+                    if textField.text?.characters.count != 4 {
+                        displayAlertWithTitle("Wrong Inpu", andMessage: "Project numbers should be exactly 4 characters long")
+                    }
+                    //Value for text length is based on the format of the date of birth which is MM/DD/YYYY
+                case dateOfBirthTextField:
+                    if textField.text?.characters.count != 10 {
+                        displayAlertWithTitle("Wrong Inpu", andMessage: "A date of birth should be exactly 10 characters long, with the format MM/DD/YYYY")
+                    }
+                case securityNumberTextField:
+                    if textField.text?.characters.count > 7 {
+                        displayAlertWithTitle("Wrong Inpu", andMessage: "Security numbers shouldn't be longer than 7 characters")
+                    }
+                default: break
                 }
-            case streetAddressTextField:
-                if textField.text?.characters.count > 15 {
-                    displayAlertWithTitle("Wrong Input", andMessage: "Street names shouldn't be longer than 10 characters")
-                }
-            case cityNameTextField:
-                if textField.text?.characters.count > 15 {
-                    displayAlertWithTitle("Wrong Input", andMessage: "City names shouldn't be longer than 15 characters")
-                }
-            case companyNameTextField:
-                if textField.text?.characters.count > 15 {
-                    displayAlertWithTitle("Wrong Input", andMessage: "Company names shouldn't be longer than 15 characters")
-                }
-            case stateNameTextField:
-                if textField.text?.characters.count > 2 {
-                    displayAlertWithTitle("Wrong Input", andMessage: "Please enter the two letter abbreviation for state names")
-                }
-            case zipCodeTextField:
-                if textField.text?.characters.count > 5 {
-                    displayAlertWithTitle("Wrong Inpu", andMessage: "Zip codes shouldn't be longer than 5 characters")
-                }
-            case projectNumberTextField:
-                if textField.text?.characters.count > 4 {
-                    displayAlertWithTitle("Wrong Inpu", andMessage: "Project numbers shouldn't be longer than 5 characters")
-                }
-            case dateOfBirthTextField:
-                if textField.text?.characters.count > 10 {
-                    displayAlertWithTitle("Wrong Inpu", andMessage: "Dates of birth shouldn't be longer than 10 characters")
-                }
-            case securityNumberTextField:
-                if textField.text?.characters.count > 7 {
-                    displayAlertWithTitle("Wrong Inpu", andMessage: "Security numbers shouldn't be longer than 7 characters")
-                }
-            default: break
             }
         }
     }

@@ -81,6 +81,7 @@ class PassViewController: UIViewController {
     }
     
     //MARK: - Action methods
+    //The functions below use the 'swipe' methods created in Project 4 to test access to the various areas
     //Tests if the entrant has access to amusement areas
     @IBAction func testAmusementAreaAccessTapped(sender: UIButton) {
         try! guest?.swipePass(forArea: .AmusementAreas) { result in
