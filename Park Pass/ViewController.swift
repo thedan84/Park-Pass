@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cityNameTextField: UITextField!
     @IBOutlet weak var stateNameTextField: UITextField!
     @IBOutlet weak var zipCodeTextField: UITextField!
+    @IBOutlet weak var dateOfVisitTextField: UITextField!
     
     @IBOutlet weak var guestView: UIView!
     @IBOutlet weak var employeeView: UIView!
@@ -64,7 +65,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         dateOfBirthTextField.delegate = self
         securityNumberTextField.delegate = self
         zipCodeTextField.delegate = self
-        
+        dateOfVisitTextField.delegate = self
 
         //Please uncomment before testing on iPad Pro
         /*
@@ -272,11 +273,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 if let company = company {
                     do {
-                        guest = try Vendor(firstName: firstNameTextField.text, lastName: lastNameTextField.text, company: company, dateOfBirth: dateOfBirthTextField.text)
+                        guest = try Vendor(firstName: firstNameTextField.text, lastName: lastNameTextField.text, company: company, dateOfBirth: dateOfBirthTextField.text, dateOfVisit: dateOfVisitTextField.text)
                     } catch ParkError.MissingName {
                         displayAlertWithTitle("Missing Info", andMessage: "Please provide a name to proceed!")
                     } catch ParkError.MissingDateOfBirth {
                         displayAlertWithTitle("Missing Info", andMessage: "Please provide a date of birth to proceed!")
+                    } catch ParkError.MissingDateOfVisit {
+                        displayAlertWithTitle("Missing Info", andMessage: "Please provide a valid date of visit to proceed!")
                     } catch {
                         print(error)
                     }
@@ -354,6 +357,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 self.firstNameTextField.text = "Joe"
                 self.lastNameTextField.text = "Smith"
                 self.dateOfBirthTextField.text = "06/10/2002"
+                self.dateOfVisitTextField.text = dateFormatter.stringFromDate(NSDate())
                 self.companyNameTextField.text = entrant
             default: break
             }
@@ -431,7 +435,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     //This function checks for valid input dependent on the type of information required
     func checkValidInputForTextFields() {
-        let allTextFields = [firstNameTextField, lastNameTextField, streetAddressTextField, cityNameTextField, stateNameTextField, companyNameTextField, dateOfBirthTextField, projectNumberTextField, zipCodeTextField, securityNumberTextField]
+        let allTextFields = [firstNameTextField, lastNameTextField, streetAddressTextField, cityNameTextField, stateNameTextField, companyNameTextField, dateOfBirthTextField, projectNumberTextField, zipCodeTextField, securityNumberTextField, dateOfVisitTextField]
         
         for textField in allTextFields {
             if !textField.hidden {
@@ -460,21 +464,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     //Value for text length is based on US zip codes which are 5 characters long
                 case zipCodeTextField:
                     if textField.text?.characters.count != 5 {
-                        displayAlertWithTitle("Wrong Inpu", andMessage: "Please enter a valid zip code. Zip codes should be 5 characters long")
+                        displayAlertWithTitle("Wrong Input", andMessage: "Please enter a valid zip code. Zip codes should be 5 characters long")
                     }
                     //Value for text length is based on the project numbers provided in the Entrant Rules Matrix
                 case projectNumberTextField:
                     if textField.text?.characters.count != 4 {
-                        displayAlertWithTitle("Wrong Inpu", andMessage: "Project numbers should be exactly 4 characters long")
+                        displayAlertWithTitle("Wrong Input", andMessage: "Project numbers should be exactly 4 characters long")
                     }
-                    //Value for text length is based on the format of the date of birth which is MM/DD/YYYY
-                case dateOfBirthTextField:
+                    //Value for text length is based on the format of the dates which is MM/DD/YYYY
+                case dateOfBirthTextField, dateOfVisitTextField:
                     if textField.text?.characters.count != 10 {
-                        displayAlertWithTitle("Wrong Inpu", andMessage: "A date of birth should be exactly 10 characters long, with the format MM/DD/YYYY")
+                        displayAlertWithTitle("Wrong Input", andMessage: "A date should be exactly 10 characters long, with the format MM/DD/YYYY")
                     }
                 case securityNumberTextField:
                     if textField.text?.characters.count > 7 {
-                        displayAlertWithTitle("Wrong Inpu", andMessage: "Security numbers shouldn't be longer than 7 characters")
+                        displayAlertWithTitle("Wrong Input", andMessage: "Security numbers shouldn't be longer than 7 characters")
                     }
                 default: break
                 }

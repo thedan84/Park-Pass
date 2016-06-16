@@ -33,15 +33,16 @@ struct Vendor: VendorType {
     var pass: Pass?
     
     //MARK: - Initialization
-    init(firstName: String?, lastName: String?, company: Company?, dateOfBirth: String?) throws {
+    init(firstName: String?, lastName: String?, company: Company?, dateOfBirth: String?, dateOfVisit: String?) throws {
         guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
         guard let company = company else { throw ParkError.MissingCompany }
-        guard let birthday = dateOfBirth else { throw ParkError.MissingDateOfBirth }
+        guard let birthday = dateOfBirth, let dateOfBirth = dateFormatter.dateFromString(birthday) else { throw ParkError.MissingDateOfBirth }
+        guard let visitingDay = dateOfVisit, let dayOfVisit = dateFormatter.dateFromString(visitingDay) else { throw ParkError.MissingDateOfVisit }
         
         self.firstName = first
         self.lastName = last
         self.company = company
-        self.dateOfBirth = dateFormatter.dateFromString(birthday)!
-        self.dateOfVisit = NSDate()
+        self.dateOfBirth = dateOfBirth
+        self.dateOfVisit = dayOfVisit
     }
 }

@@ -19,4 +19,5 @@ enum ParkError: ErrorType {
     case ChildOlderThanFive
     case MissingProject
     case MissingCompany
+    case MissingDateOfVisit
 }
