@@ -33,24 +33,24 @@ class PassViewController: UIViewController {
         if let name = guest?.pass?.entrantName {
             nameLabel.text = name
         } else {
-            nameLabel.hidden = true
+            nameLabel.isHidden = true
         }
         
         if let passType = guest?.pass?.type {
             passTypeLabel.text = passType
         } else {
-            passTypeLabel.hidden = true
+            passTypeLabel.isHidden = true
         }
         
         if let rideAccesses = guest?.pass?.rideAccess {
             if rideAccesses.isEmpty {
-                self.rideAccessLabel.hidden = true
+                self.rideAccessLabel.isHidden = true
             } else {
                 for access in rideAccesses {
                     switch access {
-                    case .AllRides:
+                    case .allRides:
                         rideAccessLabel.text = "Unlimited Rides"
-                    case .SkipAllRideLines:
+                    case .skipAllRideLines:
                         rideAccessLabel.text = "Unlimited Rides; Skip All Ride Lines"
                     }
                 }                
@@ -60,13 +60,13 @@ class PassViewController: UIViewController {
         if let discountAccessess = guest?.pass?.discountAccess {
             for access in discountAccessess {
                 switch access {
-                case .DiscountOnFood(let discount):
+                case .discountOnFood(let discount):
                     if discount != 0 {
                         foodDiscountLabel.text = "\(discount)% discount on Food"
                     } else {
                         foodDiscountLabel.text = "0% discount on Food"
                     }
-                case .DiscountOnMerchandise(let discount):
+                case .discountOnMerchandise(let discount):
                     if discount != 0 {
                         merchDiscountLabel.text = "\(discount)% on Merchandise"
                     } else {
@@ -83,60 +83,60 @@ class PassViewController: UIViewController {
     //MARK: - Action methods
     //The functions below use the 'swipe' methods created in Project 4 to test access to the various areas
     //Tests if the entrant has access to amusement areas
-    @IBAction func testAmusementAreaAccessTapped(sender: UIButton) {
-        try! guest?.swipePass(forArea: .AmusementAreas) { result in
+    @IBAction func testAmusementAreaAccessTapped(_ sender: UIButton) {
+        try! guest?.swipePass(forArea: .amusementAreas) { result in
             self.updateTestResultViewForResult(result)
         }
     }
     
     //Tests if the entrant has ride access
-    @IBAction func testRideAccessTapped(sender: UIButton) {
-        try! guest?.swipePass(forRide: .AllRides) { result in
+    @IBAction func testRideAccessTapped(_ sender: UIButton) {
+        try! guest?.swipePass(forRide: .allRides) { result in
             self.updateTestResultViewForResult(result)
         }
     }
     
     //Tests if the entrant has access to the kitchen
-    @IBAction func testKitchenAccessTapped(sender: UIButton) {
-        try! guest?.swipePass(forArea: .KitchenAreas) { result in
+    @IBAction func testKitchenAccessTapped(_ sender: UIButton) {
+        try! guest?.swipePass(forArea: .kitchenAreas) { result in
             self.updateTestResultViewForResult(result)
             
         }
     }
     
     //Tests if the entrant has access to maintenance areas
-    @IBAction func testMaintenanceAccessTapped(sender: UIButton) {
-        try! guest?.swipePass(forArea: .MaintenanceAreas) { result in
+    @IBAction func testMaintenanceAccessTapped(_ sender: UIButton) {
+        try! guest?.swipePass(forArea: .maintenanceAreas) { result in
             self.updateTestResultViewForResult(result)
         }
     }
     
     //Tests if the entrant has access to office areas
-    @IBAction func testOfficeAccessTapped(sender: UIButton) {
-        try! guest?.swipePass(forArea: .OfficeAreas) { result in
+    @IBAction func testOfficeAccessTapped(_ sender: UIButton) {
+        try! guest?.swipePass(forArea: .officeAreas) { result in
             self.updateTestResultViewForResult(result)
             
         }
     }
     
     //Dismisses the view
-    @IBAction func createNewPassButtonTapped(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func createNewPassButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
     //Helper method to update the 'test result view'
-    func updateTestResultViewForResult(result: Bool) {
+    func updateTestResultViewForResult(_ result: Bool) {
         switch result {
         case true:
             testResultView.backgroundColor = UIColor(red: 0, green: 185/255, blue: 0, alpha: 1.0)
             testResultLabel.text = "Access Granted"
-            testResultLabel.textColor = .whiteColor()
-            testResultLabel.font = .systemFontOfSize(25)
+            testResultLabel.textColor = .white
+            testResultLabel.font = .systemFont(ofSize: 25)
         case false:
             testResultView.backgroundColor = UIColor(red: 255/255, green: 0, blue: 41/255, alpha: 1.0)
             testResultLabel.text = "Access Denied"
-            testResultLabel.textColor = .whiteColor()
-            testResultLabel.font = .systemFontOfSize(25)
+            testResultLabel.textColor = .white
+            testResultLabel.font = .systemFont(ofSize: 25)
         }
     }
 }

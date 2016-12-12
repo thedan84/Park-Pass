@@ -16,20 +16,20 @@ struct Sound {
     var accessDeniedSound: SystemSoundID = 1
     
     //Properties which get the right sound based on path
-    var accessGranted: NSURL {
-        let pathToSoundFile = NSBundle.mainBundle().pathForResource("AccessGranted", ofType: "wav")
-        return NSURL(fileURLWithPath: pathToSoundFile!)
+    var accessGranted: URL {
+        let pathToSoundFile = Bundle.main.path(forResource: "AccessGranted", ofType: "wav")
+        return URL(fileURLWithPath: pathToSoundFile!)
     }
     
-    var accessDenied: NSURL {
-        let pathToSoundFile = NSBundle.mainBundle().pathForResource("AccessDenied", ofType: "wav")
-        return NSURL(fileURLWithPath: pathToSoundFile!)
+    var accessDenied: URL {
+        let pathToSoundFile = Bundle.main.path(forResource: "AccessDenied", ofType: "wav")
+        return URL(fileURLWithPath: pathToSoundFile!)
     }
     
     //MARK: - Helper
     //Helper function to load the right sound from the bundle url
-    mutating func loadSoundWithURL(url: NSURL, inout id: SystemSoundID) {
-        AudioServicesCreateSystemSoundID(url, &id)
+    mutating func loadSoundWithURL(_ url: URL, id: inout SystemSoundID) {
+        AudioServicesCreateSystemSoundID(url as CFURL, &id)
     }
     
     //MARK: - Play the right sound

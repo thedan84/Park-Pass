@@ -17,13 +17,13 @@ protocol ManagerType: EntrantType {
     var state: String { get }
     var zipCode: Int { get }
     var socialSecurityNumber: Int { get }
-    var dateOfBirth: NSDate { get }
+    var dateOfBirth: Date { get }
     var managerType: ManagementTier { get }
 }
 
 //Enum to differentiate between the various Manager types
 enum ManagementTier {
-    case ShiftManager, GeneralManager, SeniorManager
+    case shiftManager, generalManager, seniorManager
 }
 
 struct Manager: ManagerType {
@@ -36,22 +36,22 @@ struct Manager: ManagerType {
     var state: String
     var zipCode: Int
     var socialSecurityNumber: Int
-    var dateOfBirth: NSDate
+    var dateOfBirth: Date
     var managerType: ManagementTier
     
     var pass: Pass?
     
     //MARK: - Initialization
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: Int?, socialSecurityNumber: Int?, dateOfBirth: String?, managerType: ManagementTier?) throws {
-        guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
+        guard let first = firstName, let last = lastName else { throw ParkError.missingName }
         
-        guard let address = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.MissingAddress }
+        guard let address = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.missingAddress }
         
-        guard let security = socialSecurityNumber else { throw ParkError.MissingSecurityNumber }
+        guard let security = socialSecurityNumber else { throw ParkError.missingSecurityNumber }
         
-        guard let birthDate = dateOfBirth else { throw ParkError.MissingDateOfBirth }
+        guard let birthDate = dateOfBirth else { throw ParkError.missingDateOfBirth }
         
-        guard let type = managerType else { throw ParkError.MissingType }
+        guard let type = managerType else { throw ParkError.missingType }
         
         self.firstName = first
         self.lastName = last
@@ -60,7 +60,7 @@ struct Manager: ManagerType {
         self.state = state
         self.zipCode = zip
         self.socialSecurityNumber = security
-        self.dateOfBirth = dateFormatter.dateFromString(birthDate)!
+        self.dateOfBirth = dateFormatter.date(from: birthDate)!
         self.managerType = type
     }
 }

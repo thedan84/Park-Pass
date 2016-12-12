@@ -10,7 +10,7 @@ import Foundation
 
 //Enum with the different types of guests
 enum GuestType {
-    case Classic, VIP, FreeChild, SeasonPass, Senior
+    case classic, vip, freeChild, seasonPass, senior
 }
 
 struct Guest: EntrantType {
@@ -23,19 +23,19 @@ struct Guest: EntrantType {
     var zipCode: Int? = nil
     
     var type: GuestType
-    var birthday: NSDate?
+    var birthday: Date?
     var pass: Pass?
     
     //MARK: - Initialization
     init(firstName: String? = nil, lastName: String? = nil, streetAddress: String? = nil, city: String? = nil, state: String? = nil, zipCode: Int? = nil, dateOfBirth: String?, guestType: GuestType) throws {
         
         //Helper method to determine if the guest is younger than five years old and allowed to enter as a 'Free Child' guest
-        func isYoungerThanFiveYearsOld(birthyear: NSDate) -> Bool {
-            let today = NSDate()
-            let calendar = NSCalendar.currentCalendar()
-            let components = calendar.components(.Year, fromDate: birthyear, toDate: today, options: .MatchFirst)
+        func isYoungerThanFiveYearsOld(_ birthyear: Date) -> Bool {
+            let today = Date()
+            let calendar = Calendar.current
+            let components = (calendar as NSCalendar).components(.year, from: birthyear, to: today, options: .matchFirst)
             
-            if components.year <= 5 {
+            if components.year! <= 5 {
                 return true
             } else {
                 return false
@@ -43,25 +43,25 @@ struct Guest: EntrantType {
         }
         
         switch guestType {
-        case .FreeChild:
-            guard let birthday = dateOfBirth else { throw ParkError.MissingDateOfBirth }
+        case .freeChild:
+            guard let birthday = dateOfBirth else { throw ParkError.missingDateOfBirth }
             
-            guard let birthyear = dateFormatter.dateFromString(birthday) else { throw ParkError.MissingDateOfBirth }
+            guard let birthyear = dateFormatter.date(from: birthday) else { throw ParkError.missingDateOfBirth }
             
             self.birthday = birthyear
             
             if isYoungerThanFiveYearsOld(birthyear) {
-                self.type = .FreeChild
+                self.type = .freeChild
             } else {
-                throw ParkError.ChildOlderThanFive
+                throw ParkError.childOlderThanFive
             }
-        case .SeasonPass:
-            guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
-            guard let street = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.MissingAddress }
+        case .seasonPass:
+            guard let first = firstName, let last = lastName else { throw ParkError.missingName }
+            guard let street = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.missingAddress }
             
-            guard let birthday = dateOfBirth else { throw ParkError.MissingDateOfBirth }
+            guard let birthday = dateOfBirth else { throw ParkError.missingDateOfBirth }
 
-            guard let birthyear = dateFormatter.dateFromString(birthday) else { throw ParkError.MissingDateOfBirth }
+            guard let birthyear = dateFormatter.date(from: birthday) else { throw ParkError.missingDateOfBirth }
 
             self.birthday = birthyear
             self.firstName = first
@@ -72,15 +72,15 @@ struct Guest: EntrantType {
             self.zipCode = zip
             self.type = guestType
             
-        case .Senior:
-            guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
-            guard let birthday = dateOfBirth else { throw ParkError.MissingDateOfBirth }
+        case .senior:
+            guard let first = firstName, let last = lastName else { throw ParkError.missingName }
+            guard let birthday = dateOfBirth else { throw ParkError.missingDateOfBirth }
             
-            guard let birthyear = dateFormatter.dateFromString(birthday) else { throw ParkError.MissingDateOfBirth }
+            guard let birthyear = dateFormatter.date(from: birthday) else { throw ParkError.missingDateOfBirth }
             self.firstName = first
             self.lastName = last
             self.birthday = birthyear
-            self.type = .Senior
+            self.type = .senior
         default: self.type = guestType
         }
     }

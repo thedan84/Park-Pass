@@ -17,17 +17,17 @@ protocol Employable: EntrantType {
     var state: String { get }
     var zipCode: Int { get }
     var socialSecurityNumber: Int { get }
-    var dateOfBirth: NSDate { get }
+    var dateOfBirth: Date { get }
     var employeeType: EmployeeType { get }
 }
 
 //Enum to differentiate between the various Hourly Employee types
 enum EmployeeType {
-    case Hourly, Contract
+    case hourly, contract
 }
 
 enum WorkType {
-    case FoodServices, RideServices, Maintenance
+    case foodServices, rideServices, maintenance
 }
 
 enum ProjectNumber {
@@ -43,7 +43,7 @@ struct HourlyEmployee: Employable {
     var state: String
     var zipCode: Int
     var socialSecurityNumber: Int
-    var dateOfBirth: NSDate
+    var dateOfBirth: Date
     var employeeType: EmployeeType
     var workType: WorkType
     
@@ -51,15 +51,15 @@ struct HourlyEmployee: Employable {
     
     //MARK: - Initialization
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: Int?, socialSecurityNumber: Int?, dateOfBirth: String?, workType: WorkType?) throws {
-        guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
+        guard let first = firstName, let last = lastName else { throw ParkError.missingName }
         
-        guard let address = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.MissingAddress }
+        guard let address = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.missingAddress }
         
-        guard let security = socialSecurityNumber else { throw ParkError.MissingSecurityNumber }
+        guard let security = socialSecurityNumber else { throw ParkError.missingSecurityNumber }
         
-        guard let birthDate = dateOfBirth else { throw ParkError.MissingDateOfBirth }
+        guard let birthDate = dateOfBirth else { throw ParkError.missingDateOfBirth }
         
-        guard let work = workType else { throw ParkError.MissingType }
+        guard let work = workType else { throw ParkError.missingType }
         
         self.firstName = first
         self.lastName = last
@@ -68,8 +68,8 @@ struct HourlyEmployee: Employable {
         self.state = state
         self.zipCode = zip
         self.socialSecurityNumber = security
-        self.dateOfBirth = dateFormatter.dateFromString(birthDate)!
-        self.employeeType = .Hourly
+        self.dateOfBirth = dateFormatter.date(from: birthDate)!
+        self.employeeType = .hourly
         self.workType = work
     }
 }
@@ -83,7 +83,7 @@ struct ContractEmployee: Employable {
     var state: String
     var zipCode: Int
     var socialSecurityNumber: Int
-    var dateOfBirth: NSDate
+    var dateOfBirth: Date
     var projectNumber: ProjectNumber
     var employeeType: EmployeeType
     
@@ -91,15 +91,15 @@ struct ContractEmployee: Employable {
     
     //MARK: - Initialization
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: Int?, socialSecurityNumber: Int?, dateOfBirth: String?, projectNumber: ProjectNumber?) throws {
-        guard let first = firstName, let last = lastName else { throw ParkError.MissingName }
+        guard let first = firstName, let last = lastName else { throw ParkError.missingName }
         
-        guard let address = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.MissingAddress }
+        guard let address = streetAddress, let city = city, let state = state, let zip = zipCode else { throw ParkError.missingAddress }
         
-        guard let security = socialSecurityNumber else { throw ParkError.MissingSecurityNumber }
+        guard let security = socialSecurityNumber else { throw ParkError.missingSecurityNumber }
         
-        guard let birthDate = dateOfBirth else { throw ParkError.MissingDateOfBirth }
+        guard let birthDate = dateOfBirth else { throw ParkError.missingDateOfBirth }
         
-        guard let project = projectNumber else { throw ParkError.MissingProject }
+        guard let project = projectNumber else { throw ParkError.missingProject }
         
         self.firstName = first
         self.lastName = last
@@ -108,8 +108,8 @@ struct ContractEmployee: Employable {
         self.state = state
         self.zipCode = zip
         self.socialSecurityNumber = security
-        self.dateOfBirth = dateFormatter.dateFromString(birthDate)!
-        self.employeeType = .Contract
+        self.dateOfBirth = dateFormatter.date(from: birthDate)!
+        self.employeeType = .contract
         self.projectNumber = project
     }
 }

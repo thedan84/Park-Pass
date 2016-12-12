@@ -9,15 +9,15 @@
 import Foundation
 
 //ErrorType enum
-enum ParkError: ErrorType {
-    case MissingName
-    case MissingAddress
-    case MissingSecurityNumber
-    case MissingDateOfBirth
-    case MissingType
-    case MissingPass
-    case ChildOlderThanFive
-    case MissingProject
-    case MissingCompany
-    case MissingDateOfVisit
+enum ParkError: Error {
+    case missingName
+    case missingAddress
+    case missingSecurityNumber
+    case missingDateOfBirth
+    case missingType
+    case missingPass
+    case childOlderThanFive
+    case missingProject
+    case missingCompany
+    case missingDateOfVisit
 }
